@@ -1,5 +1,6 @@
 package com.example.pun.senddata;
 
+import android.app.DownloadManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -7,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 
 import com.loopj.android.http.AsyncHttpClient;
@@ -32,6 +34,7 @@ public class newarticle extends AppCompatActivity {
     private static String _csrfToken;
     private Button btn_submitnew;
     private EditText editText_title, editText_description;
+
 
 
 
@@ -74,6 +77,8 @@ public class newarticle extends AppCompatActivity {
         editText_description = (EditText)findViewById(R.id.editText_description);
 
 
+
+
     }
 
     private View.OnClickListener submitnewClick = new View.OnClickListener() {
@@ -85,12 +90,46 @@ public class newarticle extends AppCompatActivity {
             _client.addHeader("X-CSRF-Token", _csrfToken);
             RequestParams params = new RequestParams();
 
+
             String title = editText_title.getText().toString();
           //  String description = editText_description.getText().toString();
 
 
             params.put("title", title);
             params.put("type", "report");
+            params.put("date", "10/25/2017");
+
+
+            RequestParams dateparams = new RequestParams();
+            dateparams.put("date", "09/25/2017");
+            dateparams.put("time", "00:00:00");
+
+            RequestParams dateobject = new RequestParams();
+            dateobject.put("value", dateparams);
+
+
+            RequestParams[] und = new RequestParams[1];
+            und[0] = new RequestParams();
+            und[0].put("und", dateobject);
+
+            RequestParams fielddateobj = new RequestParams();
+            fielddateobj.put("field_date", und);
+
+           // params.put("field_date", "{'und':[{'value':{'date':'09/25/2017','time':'00:00:00'}}]}");
+
+           // params.put("body", "{'und':[{'value':'body'}]}");
+
+            RequestParams value = new RequestParams();
+            value.put("value", "testbody");
+
+            RequestParams[] und2 = new RequestParams[1];
+            und2[0] = new RequestParams();
+            und2[0].put("und", value);
+
+            RequestParams bodyobj = new RequestParams();
+            bodyobj.put("body", und2);
+
+            params.put("body", bodyobj);
 
 
 
